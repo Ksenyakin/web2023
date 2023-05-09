@@ -1,89 +1,224 @@
 <?php
-/**
- * Реализовать проверку заполнения обязательных полей формы в предыдущей
- * с использованием Cookies, а также заполнение формы по умолчанию ранее
- * введенными значениями.
- */
 
-// Отправляем браузеру правильную кодировку,
-// файл index.php должен быть в кодировке UTF-8 без BOM.
 header('Content-Type: text/html; charset=UTF-8');
 
-// В суперглобальном массиве $_SERVER PHP сохраняет некторые заголовки запроса HTTP
-// и другие сведения о клиненте и сервере, например метод текущего запроса $_SERVER['REQUEST_METHOD'].
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-  // Массив для временного хранения сообщений пользователю.
   $messages = array();
-
-  // В суперглобальном массиве $_COOKIE PHP хранит все имена и значения куки текущего запроса.
-  // Выдаем сообщение об успешном сохранении.
   if (!empty($_COOKIE['save'])) {
-    // Удаляем куку, указывая время устаревания в прошлом.
-    setcookie('save', '', 100000);
-    // Если есть параметр save, то выводим сообщение пользователю.
-    $messages[] = 'Спасибо, результаты сохранены.';
+      setcookie('save', '', 100000);
+      $messages['gucci'] = '<div class="good">Спасибо, результаты сохранены</div>';
   }
-
-  // Складываем признак ошибок в массив.
   $errors = array();
-  $errors['fio'] = !empty($_COOKIE['fio_error']);
-  // TODO: аналогично все поля.
+  $errors['name'] = !empty($_COOKIE['name_error']);
+  $errors['email1'] = !empty($_COOKIE['email_error1']);
+  $errors['email2'] = !empty($_COOKIE['email_error2']);
+  $errors['year1'] = !empty($_COOKIE['year_error1']);
+  $errors['year2'] = !empty($_COOKIE['year_error2']);
+  $errors['sex1'] = !empty($_COOKIE['sex_error1']);
+  $errors['sex2'] = !empty($_COOKIE['sex_error2']);
+  $errors['hand1'] = !empty($_COOKIE['hand_error1']);
+  $errors['hand2'] = !empty($_COOKIE['hand_error2']);
+  $errors['abilities1'] = !empty($_COOKIE['abilities_error1']);
+  $errors['abilities2'] = !empty($_COOKIE['abilities_error2']);
+  $errors['biography1'] = !empty($_COOKIE['biography_error1']);
+  $errors['biography2'] = !empty($_COOKIE['biography_error2']);
+  $errors['checkboxContract'] = !empty($_COOKIE['checkboxContract_error']);
 
-  // Выдаем сообщения об ошибках.
-  if ($errors['fio']) {
-    // Удаляем куку, указывая время устаревания в прошлом.
-    setcookie('fio_error', '', 100000);
-    // Выводим сообщение.
-    $messages[] = '<div class="error">Заполните имя.</div>';
+  if ($errors['name']) {
+    setcookie('name_error', '', 100000);
+    $messages['name'] = '<p class="msg">Заполните имя</p>';
   }
-  // TODO: тут выдать сообщения об ошибках в других полях.
-
-  // Складываем предыдущие значения полей в массив, если есть.
+  if ($errors['email1']) {
+    setcookie('email_error1', '', 100000);
+    $messages['email1'] = '<p class="msg">Заполните email</p>';
+  } else if ($errors['email2']) {
+    setcookie('email_error2', '', 100000);
+    $messages['email2'] = '<p class="msg">Корректно* заполните email</p>';
+  }
+  if ($errors['year1']) {
+    setcookie('year_error1', '', 100000);
+    $messages['year1'] = '<p class="msg">Неправильный формат ввода года</p>';
+  } else if ($errors['year2']) {
+    setcookie('year_error2', '', 100000);
+    $messages['year2'] = '<p class="msg">Вам должно быть 14 лет</p>';
+  }
+  if ($errors['sex1']) {
+    setcookie('sex_error1', '', 100000);
+    $messages['sex1'] = '<p class="msg">Выберите пол</p>';
+  }
+  if ($errors['sex2']) {
+    setcookie('sex_error2', '', 100000);
+    $messages['sex2'] = '<p class="msg">Выбран неизвестный пол</p>';
+  }
+  if ($errors['hand1']) {
+    setcookie('hand_error1', '', 100000);
+    $messages['hand1'] = '<p class="msg">Выберите руку</p>';
+  }
+  if ($errors['hand2']) {
+    setcookie('hand_error2', '', 100000);
+    $messages['hand2'] = '<p class="msg">Выбрана неизвестная рука</p>';
+  }
+  if ($errors['abilities1']) {
+    setcookie('abilities_error1', '', 100000);
+    $messages['abilities1'] = '<p class="msg">Выберите хотя бы одну <br> сверхспособность</p>';
+  } else if ($errors['abilities2']) {
+    setcookie('abilities_error2', '', 100000);
+    $messages['abilities2'] = '<p class="msg">Выбрана неизвестная <br> сверхспособность</p>';
+  }
+  if ($errors['biography1']) {
+    setcookie('biography_error1', '', 100000);
+    $messages['biography1'] = '<p class="msg">Расскажи о себе что-нибудь</p>';
+  } else if ($errors['biography2']) {
+    setcookie('biography_error2', '', 100000);
+    $messages['biography2'] = '<p class="msg">Недопустимый формат ввода <br> биографии</p>';
+  }
+  if ($errors['checkboxContract']) {
+    setcookie('checkboxContract_error', '', 100000);
+    $messages['checkboxContract'] = '<p class="msg">Ознакомьтесь с контрактом</p>';
+  }
   $values = array();
-  $values['fio'] = empty($_COOKIE['fio_value']) ? '' : $_COOKIE['fio_value'];
-  // TODO: аналогично все поля.
-
-  // Включаем содержимое файла form.php.
-  // В нем будут доступны переменные $messages, $errors и $values для вывода 
-  // сообщений, полей с ранее заполненными данными и признаками ошибок.
+  $values['name'] = empty($_COOKIE['name_value']) ? '' : $_COOKIE['name_value'];
+  $values['email'] = empty($_COOKIE['email_value']) ? '' : $_COOKIE['email_value'];
+  $values['year'] = empty($_COOKIE['year_value']) ? '' : $_COOKIE['year_value'];
+  $values['sex'] = empty($_COOKIE['sex_value']) ? '' : $_COOKIE['sex_value'];
+  $values['hand'] = empty($_COOKIE['hand_value']) ? '' : $_COOKIE['hand_value'];
+  $values['abilities'] = empty($_COOKIE['abilities_value']) ? '' : $_COOKIE['abilities_value'];
+  $values['biography'] = empty($_COOKIE['biography_value']) ? '' : $_COOKIE['biography_value'];
+  $values['checkboxContract'] = empty($_COOKIE['checkboxContract_value']) ? '' : $_COOKIE['checkboxContract_value'];
   include('form.php');
-}
-// Иначе, если запрос был методом POST, т.е. нужно проверить данные и сохранить их в XML-файл.
-else {
-  // Проверяем ошибки.
+} else {
   $errors = FALSE;
-  if (empty($_POST['fio'])) {
-    // Выдаем куку на день с флажком об ошибке в поле fio.
-    setcookie('fio_error', '1', time() + 24 * 60 * 60);
-    $errors = TRUE;
+
+  $name = $_POST['name'];
+  $email = $_POST['email'];
+  $year = $_POST['year'];
+  $sex = $_POST['sex'];
+  $hand = $_POST['hand'];
+  if(isset($_POST["abilities"])) {
+    $abilities = $_POST["abilities"];
+    $filtred_abilities = array_filter($abilities, 
+    function($value) {
+      return($value == 1 || $value == 2 || $value == 3);
+    }
+    );
   }
-  else {
-    // Сохраняем ранее введенное в форму значение на месяц.
-    setcookie('fio_value', $_POST['fio'], time() + 30 * 24 * 60 * 60);
+  $biography = $_POST['biography'];
+  $checkboxContract = isset($_POST['checkboxContract']);
+
+  if (empty($name)) {
+    setcookie('name_error', '1', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  } else {
+    setcookie('name_value', $name, time() + 30 * 24 * 60 * 60);
   }
 
-// *************
-// TODO: тут необходимо проверить правильность заполнения всех остальных полей.
-// Сохранить в Cookie признаки ошибок и значения полей.
-// *************
+  if (empty($email)) {
+    setcookie('email_error1', '1', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    setcookie('email_error2', '1', time() + 24 * 60 * 60);
+    setcookie('email_value', $email, time() + 30 * 24 * 60 * 60);
+    $errors = TRUE;
+  } else {
+    setcookie('email_value', $email, time() + 30 * 24 * 60 * 60);
+  }
+
+  if (!is_numeric($year)) {
+    setcookie('year_error1', '1', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  } else if ((2023 - $year) < 14) {
+    setcookie('year_error2', '1', time() + 24 * 60 * 60);
+    setcookie('year_value', $year, time() + 30 * 24 * 60 * 60);
+    $errors = TRUE;
+  } else {
+    setcookie('year_value', $year, time() + 30 * 24 * 60 * 60);
+  }
+
+  if (empty($sex)) {
+    setcookie('sex_error1', '1', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  } else if ($sex != 'male' && $sex != 'female') {
+    setcookie('sex_error2', '1', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  } else {
+    setcookie('sex_value', $sex, time() + 30 * 24 * 60 * 60);
+  }
+
+  if (empty($hand)) {
+    setcookie('hand_error1', '1', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  } else if ($hand != 'right' && $hand != 'left') {
+    setcookie('hand_error2', '1', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  } else {
+    setcookie('hand_value', $hand, time() + 30 * 24 * 60 * 60);
+  }
+
+  if (empty($abilities)) {
+    setcookie('abilities_error1', '1', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  } else if (count($filtred_abilities) != count($abilities)) {
+    setcookie('abilities_error2', '1', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  } else {
+    setcookie('abilities_value', serialize($abilities), time() + 30 * 24 * 60 * 60);
+  }
+
+  if (empty($biography)) {
+    setcookie('biography_error1', '1', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  } else if (!preg_match('/^[\p{Cyrillic}\d\s,.!?-]+$/u', $biography)) {
+    setcookie('biography_error2', '1', time() + 24 * 60 * 60);
+    setcookie('biography_value', $biography, time() + 30 * 24 * 60 * 60);
+    $errors = TRUE;
+  } else {
+    setcookie('biography_value', $biography, time() + 30 * 24 * 60 * 60);
+  }
+
+  if ($checkboxContract == '') {
+    setcookie('checkboxContract_error', '1', time() + 24 * 60 * 60);
+    $errors = TRUE;
+  } else {
+    setcookie('checkboxContract_value', $checkboxContract, time() + 30 * 24 * 60 * 60);
+  }
 
   if ($errors) {
-    // При наличии ошибок перезагружаем страницу и завершаем работу скрипта.
     header('Location: index.php');
     exit();
   }
   else {
-    // Удаляем Cookies с признаками ошибок.
-    setcookie('fio_error', '', 100000);
-    // TODO: тут необходимо удалить остальные Cookies.
+    setcookie('name_error', '', 100000);
+    setcookie('email_error1', '', 100000);
+    setcookie('email_error2', '', 100000);
+    setcookie('year_error1', '', 100000);
+    setcookie('year_error2', '', 100000);
+    setcookie('sex_error1', '', 100000);
+    setcookie('sex_error2', '', 100000);
+    setcookie('hand_error1', '', 100000);
+    setcookie('hand_error2', '', 100000);
+    setcookie('abilities_error1', '', 100000);
+    setcookie('abilities_error2', '', 100000);
+    setcookie('biography_error1', '', 100000);
+    setcookie('biography_error2', '', 100000);
+    setcookie('checkboxContract_error', '', 100000);
   }
 
-  // Сохранение в БД.
-  // ...
+  $user = 'u52852';
+  $pass = '3064314';
+  $db = new PDO('mysql:host=localhost;dbname=u52855', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 
-  // Сохраняем куку с признаком успешного сохранения.
+  try {
+    $stmt = $db->prepare("INSERT INTO application (name, email, year, sex, hand, biography) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->execute([$name, $email, $year, $sex, $hand, $biography]);
+    $application_id = $db->lastInsertId();
+    $stmt = $db->prepare("INSERT INTO abilities (application_id, superpower_id) VALUES (?, ?)");
+    foreach ($abilities as $superpower_id) {
+      $stmt->execute([$application_id, $superpower_id]);
+    }
+  } catch (PDOException $e) {
+    print('Error : ' . $e->getMessage());
+    exit();
+  }
   setcookie('save', '1');
-
-  // Делаем перенаправление.
   header('Location: index.php');
 }
