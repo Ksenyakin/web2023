@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Аптечный киоск</title>
+</head>
+<body>
+  <body>
+    <h1>Аптечный киоск</h1>
+    <h2>Номенклатура лекарств</h2>
+    <form method="post" action="add_medicine.php">
+      <label>Название:</label>
+      <input type="text" name="name" /><br />
+      <label>Описание:</label>
+      <textarea name="description"></textarea><br />
+      <label>Цена:</label>
+      <input type="number" name="price" /><br />
+      <button type="submit">Добавить</button>
+    </form>
+    <br />
+    <form method="post" action="edit_medicine.php">
+      <label>Название:</label>
+      <input type="text" name="name" /><br />
+      <label>Описание:</label>
+      <textarea name="description"></textarea><br />
+      <label>Цена:</label>
+      <input type="number" name="price" /><br />
+      <button type="submit">Редактировать</button>
+    </form>
+    <br />
+    <form method="post" action="delete_medicine.php">
+      <label>Название:</label>
+      <input type="text" name="name" /><br />
+      <button type="submit">Удалить</button>
+    </form>
+    <br />
+    <form method="get" action="view_medicines.php">
+      <label>Показать лекарства с ценой не выше:</label>
+      <input type="number" name="max_price" /><br />
+      <button type="submit">Показать</button>
+    </form>
+    <hr />
+    <h2>Работники аптеки</h2>
+    <form method="post" action="add_employee.php">
+      <label>ФИО:</label>
+      <input type="text" name="name" /><br />
+      <label>Должность:</label>
+      <input type="text" name="position" /><br />
+      <button type="submit">Добавить</button>
+    </form>
+    <br />
+    <form method="post" action="edit_employee.php">
+      <label>ФИО:</label>
+      <input type="text" name="name" /><br />
+      <label>Должность:</label>
+      <input type="text" name="position" /><br />
+      <button type="submit">Редактировать</button>
+    </form>
+    <br />
+    <form method="post" action="delete_employee.php">
+      <label>ФИО:</label>
+      <input type="text" name="name" /><br />
+      <button type="submit">Удалить</button>
+    </form>
+    <br />
+    <form method="get" action="view_employees.php">
+      <label>Показать работников с должностью:</label>
+      <input type="text" name="position" /><br />
+      <button type="submit">Показать</button>
+    </form>
+    <hr />
+    <h2>Покупатели</h2>
+    <form method="post" action="add_customer.php">
+      <label>ФИО:</label>
+      <input type="text" name="name" /><br />
+      <label>Адрес:</label>
+      <input type="text" name="address" /><br />
+      <label>Телефон:</label>
+      <input type="text" name="phone" /><br />
+      <button type="submit">Добавить</button>
+    </form>
+    <br />
+    <form method="post" action="edit_customer.php">
+      <label>ФИО:</label>
+      <input type="text" name="name" /><br />
+      <label>Адрес:</label>
+      <input type="text" name="address" /><br />
+      <label>Телефон:</label>
+      <input type="text" name="phone" /><br />
+      <button type="submit">Редактировать</button>
+    </form>
+    <br />
+    <form method="post" action="delete_customer.php">
+      <label>ФИО:</label>
+      <input type="text" name="name" /><br />
+      <button type="submit">Удалить</button>
+    </form>
+    <br />
+    <form method="get" action="view_customers.php">
+      <label>Показать покупателей, проживающих по адресу:</label>
+      <input type="text" name="address" /><br />
+      <button type="submit">Показать</button>
+    </form>
+    <hr />
+    <h2>Журнал регистрации продаж</h2>
+    <form method="post" action="add_sale.php">
+      <label>Лекарство:</label>
+      <select name="medicine_name">
+        <option value="Анальгин">Анальгин</option>
+        <option value="Аспирин">Аспирин</option>
+        <option value="Парацетамол">Парацетамол</option></select
+      ><br />
+      <label>Количество:</label>
+      <input type="number" name="quantity" /><br />
+      <label>Покупатель:</label>
+      <select name="customer_name">
+        <option value="Иванов Иван Иванович">Иванов Иван Иванович</option>
+        <option value="Петров Петр Петрович">Петров Петр Петрович</option>
+        <option value="Сидоров Сидор Сидорович">
+          Сидоров Сидор Сидорович
+        </option></select
+      ><br />
+      <button type="submit">Добавить</button>
+    </form>
+    <br />
+    <form method="post" action="edit_sale.php">
+      <label>Идентификатор:</label>
+      <input type="number" name="id" /><br />
+      <label>Лекарство:</label>
+      <select name="medicine_name">
+        <option value="Анальгин">Анальгин</option>
+        <option value="Аспирин">Аспирин</option>
+        <option value="Парацетамол">Парацетамол</option></select
+      ><br />
+      <label>Количество:</label>
+      <input type="number" name="quantity" /><br />
+      <label>Покупатель:</label>
+      <select name="customer_name">
+        <option value="Иванов Иван Иванович">Иванов Иван Иванович</option>
+        <option value="Петров Петр Петрович">Петров Петр Петрович</option>
+        <option value="Сидоров Сидор Сидорович">
+          Сидоров Сидор Сидорович
+        </option></select
+      ><br />
+      <button type="submit">Редактировать</button>
+    </form>
+    <br />
+    <form method="post" action="delete_sale.php">
+      <label>Идентификатор:</label>
+      <input type="number" name="id" /><br />
+      <button type="submit">Удалить</button>
+    </form>
+    <br />
+    <form method="get" action="view_sales.php">
+      <label>Показать продажи лекарства:</label>
+      <select name="medicine_name">
+        <option value="Анальгин">Анальгин</option>
+        <option value="Аспирин">Аспирин</option>
+        <option value="Парацетамол">Парацетамол</option></select
+      ><br />
+      <button type="submit">Показать</button>
+    </form>
+  </body>
+</html>
