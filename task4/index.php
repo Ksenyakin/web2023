@@ -205,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
   $user = 'u52852';
   $pass = '3064314';
-  $db = new PDO('mysql:host=localhost;dbname=u52855', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
+  $db = new PDO('mysql:host=localhost;dbname=u52852', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 
   try {
     $stmt = $db->prepare("INSERT INTO application (name, email, year, sex, hand, biography) VALUES (?, ?, ?, ?, ?, ?)");
