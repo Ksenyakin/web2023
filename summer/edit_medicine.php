@@ -1,9 +1,8 @@
 <?php
 // Подключаемся к базе данных
-$servername = "localhost";
-$username = "username";
-$password = "password";
-$dbname = "pharmacy_kiosk";
+$user = 'u52852';
+$pass = '3064314';
+$db = new PDO('mysql:host=localhost;dbname=u52852', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
